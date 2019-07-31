@@ -1,0 +1,29 @@
+id,name,lineage,color
+ferrari,Ferrari,Ferrari,#EA2027
+williams,Williams,Williams,#227093
+mclaren,McLaren,McLaren,#fa8231
+sauber,Sauber,Sauber,#4b7bec
+redbull,Red Bull,Jaguar/Red Bull,#304e94
+torrorosso,Torro Rosso,Minardi/Torro Rosso,#45aaf2
+brawn,Brawn,Honda/Mercedes,#33d9b2
+caterham,Caterham,Team Lotus/Caterham,#006266
+forceindia,Force India,Jordan/Force India,#d35400
+hispania,Hispania,Toyota/Hispania,#E23CD2
+honda,Honda,Honda/Mercedes,#84817a
+jaguar,Jaguar,Jaguar/Red Bull,#20bf6b
+jordan,Jordan,Jordan/Force India,#fed330
+lotus,Lotus,Renault/Lotus,#ccae62
+mercedes,Mercedes,Honda/Mercedes,#696f73
+midlandspyker,Midland Spyker,Jordan/Force India,#4b6584
+minardi,Minardi,Minardi/Torro Rosso,#26de81
+racingpoint,Racing Point,Jordan/Force India,#fd9644
+renault,Ranault,Renault/Lotus,#f7b731
+teamlotus,Team Lotus,Team Lotus/Caterham,#009432
+toyota,Toyota,Toyota/Hispania,#b33939
+superaguri,Super Aguri,Arrows/Super Aguri,#6D214F
+virgin,Virgin,Virgin/Marussia/Manor Racing,#e74c3c
+manorracing,Manor Racing,Virgin/Marussia/Manor Racing,#1B9CFC
+marussia,Marussia,Virgin/Marussia/Manor Racing,#ED4C67
+haas,Haas,Haas,#a5b1c2
+arrows,Arrows,Arrows/Super Aguri,#a7b3b9
+prost,Prost,Prost,#2323ed
