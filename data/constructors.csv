@@ -1,60 +1,60 @@
-id,name,lineage,color,notes,url
-ferrari,Ferrari,,#EA2027,Oldest team,https://en.wikipedia.org/wiki/Scuderia_Ferrari
-mclaren,McLaren,,#fa8231,"Second oldest, after Ferrari",https://en.wikipedia.org/wiki/McLaren
-williams,Williams,,#227093,,https://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering
-sauber,Sauber,Sauber,#4b7bec,,https://en.wikipedia.org/wiki/Sauber_Motorsport
-alpharomeo,Alpha Romeo,Sauber,#ff0000,Renamed from Sauber,https://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One
-bmwsauber,BMW Sauber,Sauber,#0000ff,Renamed from Sauber,https://en.wikipedia.org/wiki/BMW_in_Formula_One
-tyrrell,Tyrrell,Tyrell/BAR/Honda/Mercedes,#2d5da0,Formed in 1958,https://en.wikipedia.org/wiki/Tyrrell_Racing
-bar,BAR,Tyrell/BAR/Honda/Mercedes,#7b0802,Buyout of Tyrrell,https://en.wikipedia.org/wiki/British_American_Racing
-honda,Honda,Tyrell/BAR/Honda/Mercedes,#84817a,Buyout of BAR,https://en.wikipedia.org/wiki/Honda_in_Formula_One
-brawn,Brawn,Tyrell/BAR/Honda/Mercedes,#33d9b2,Buyout of Honda,https://en.wikipedia.org/wiki/Brawn_GP
-mercedes,Mercedes,Tyrell/BAR/Honda/Mercedes,#696f73,"Formed in 1954, withdraw in 1955, then returned in 2010 after buyout of Brawn.",https://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One
-benetton,Benetton,Renault/Lotus/Benetton,#12cff3,"In 2000, the team was purchased by Renault, but competed as Benetton for the 2000 and 2001 seasons. In 2002, the team became Renault F1.",https://en.wikipedia.org/wiki/Benetton_Formula
-renault,Renault,Renault/Lotus/Benetton,#f7b731,Buyout of Benetton,https://en.wikipedia.org/wiki/Renault_in_Formula_One
-lotusf1,Lotus F1 (Renault),Renault/Lotus/Benetton,#ccae62,Temporary rename of Renault.,https://en.wikipedia.org/wiki/Lotus_F1
-jordan,Jordan,Racing Point-Force India-Jordan,#fed330,Started by Eddie Jordan in 1991,https://en.wikipedia.org/wiki/Jordan_Grand_Prix
-midland,Midland,Racing Point-Force India-Jordan,#004400,Buyout of Jordan,https://en.wikipedia.org/wiki/Midland_F1_Racing
-spyker,Spyker,Racing Point-Force India-Jordan,#ff0000,Buyout of Midland,https://en.wikipedia.org/wiki/Spyker_F1
-forceindia,Force India,Racing Point-Force India-Jordan,#d35400,Buyout of Spyker,https://en.wikipedia.org/wiki/Force_India
-racingpointforceindia,Racing Point Force India,Racing Point-Force India-Jordan,#cc00cc,Buyout of Force India,https://en.wikipedia.org/wiki/Racing_Point_Force_India
-racingpoint,Racing Point,Racing Point-Force India-Jordan,#fd9644,Renamed from Racing Point Force India,https://en.wikipedia.org/wiki/Racing_Point_F1_Team
-stewart,Stewart,Red Bull-Jaguar-Stewart,#000000,"At the end of 1999, Ford bought the team outright and it was renamed Jaguar Racing.",https://en.wikipedia.org/wiki/Stewart_Grand_Prix
-jaguar,Jaguar,Red Bull-Jaguar-Stewart,#20bf6b,Buyout of Stewart,https://en.wikipedia.org/wiki/Jaguar_Racing
-redbull,Red Bull,Red Bull-Jaguar-Stewart,#304e94,Buyout of Jaguar,https://en.wikipedia.org/wiki/Red_Bull_Racing
-minardi,Minardi,Minardi/Torro Rosso,#26de81,,https://en.wikipedia.org/wiki/Minardi
-torrorosso,Torro Rosso,Minardi/Torro Rosso,#45aaf2,Buyout of Minardi,https://en.wikipedia.org/wiki/Scuderia_Toro_Rosso
-teamlotus,Team Lotus,Team Lotus/Caterham,#009432,,https://en.wikipedia.org/wiki/Team_Lotus_(2010%E2%80%9311)
-caterham,Caterham,Team Lotus/Caterham,#006266,Renamed from Team Lotus,https://en.wikipedia.org/wiki/Caterham_F1
-superaguri,Super Aguri,Arrows/Super Aguri,#6D214F,* double check,
-arrows,Arrows,Arrows/Super Aguri,#a7b3b9,Arrows was known as Footwork from 1991 to 1996.,
-footwork,Footwork,Arrows/Super Aguri,#ba352c,was known as Footwork from 1991 to 1996.,
-prost,Prost,Prost,#2323ed,,
-ligier,Equipe Ligier,Prost,#130101,Sold to Alain Prost and became Prost Grand Prix in 1997.,
-virgin,Virgin,Virgin/Marussia/Manor,#e74c3c,Buyout of Manor,https://en.wikipedia.org/wiki/Virgin_Racing
-manorracing,MRT,Virgin/Marussia/Manor,#1B9CFC,"Preceeded Virgin, renamed back after takeover by Marussia",https://en.wikipedia.org/wiki/Manor_Racing
-marussia,Marussia,Virgin/Marussia/Manor,#ED4C67,Buyout of Virgin,https://en.wikipedia.org/wiki/Marussia_F1
-pacific,Pacific,,#2a86c9,,
-simtek,Simtek,,#74f0b6,,
-toyota,Toyota,,#b33939,,https://en.wikipedia.org/wiki/Toyota_Racing_(Formula_One_team)
-haas,Haas,,#a5b1c2,No relation to Haas Lola,
-march,March,March/Leyton,#f5242e,,
-forti,Forti,,#d8b757,,https://en.wikipedia.org/wiki/Forti
-hrt,HRT,,#E23CD2,,
-brabham,Brabham,,red,,https://en.wikipedia.org/wiki/Brabham
-fondmetal,Fondmetal,Osella-Fondmetal,#122311,,
-dallara,Dallara,,violet,Designer of Haas F1 cars,
-andreamoda,Andrea Moda,Coloni/Andrea Moda,#111111,Buyout of Coloni,https://en.wikipedia.org/wiki/Andrea_Moda_Formula
-coloni,Coloni,Coloni/Andrea Moda,yellow,,https://en.wikipedia.org/wiki/Scuderia_Coloni
-venturi,Venturi,Larousse-Venturi,pink,,
-mastercardlola,MasterCard Lola,Lola,orange,,
-lolabms,Lola BMS Scuderia Italia,Lola,#f77b0d,,
-larrousse,Larousse,Larousse-Venturi,#30264d,,
-lambo,Modena Team SpA,,purple,,https://en.wikipedia.org/wiki/Modena_(racing_team)
-ags,AGS,,lime,,
-leytonhouse,Layton House,March/Leyton,blue,,https://en.wikipedia.org/wiki/Leyton_House_Racing
-lola,Lola,,lime,,
-osella,Osella,Osella-Fondmetal,magenta,,https://en.wikipedia.org/wiki/Osella
-eurobrun,EuroBrun,Alpha-Brun-EuroBrun,yellow,Fromed from Alpha and Brun,https://en.wikipedia.org/wiki/EuroBrun
-life,Life,,red,,
-onyx,Onyx,,blue,,https://en.wikipedia.org/wiki/Onyx_Grand_Prix
+id,name,lineage,color,action,notes,url
+ferrari,Ferrari,,#DC0000,,Oldest team,https://en.wikipedia.org/wiki/Scuderia_Ferrari
+mclaren,McLaren,,#FF8700,,"Second oldest, after Ferrari",https://en.wikipedia.org/wiki/McLaren
+williams,Williams,,#227093,,,https://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering
+sauber,Sauber,Sauber,#006EFF,Renamed,,https://en.wikipedia.org/wiki/Sauber_Motorsport
+alpharomeo,Alpha Romeo,Sauber,#9B0000,Renamed,Renamed from Sauber,https://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One
+bmwsauber,BMW Sauber,Sauber,#0000ff,Renamed,Renamed from Sauber,https://en.wikipedia.org/wiki/BMW_in_Formula_One
+tyrrell,Tyrrell,Tyrell/BAR/Honda/Mercedes,#2d5da0,,Formed in 1958,https://en.wikipedia.org/wiki/Tyrrell_Racing
+bar,BAR,Tyrell/BAR/Honda/Mercedes,#7b0802,Sold to,Buyout of Tyrrell,https://en.wikipedia.org/wiki/British_American_Racing
+honda,Honda,Tyrell/BAR/Honda/Mercedes,#84817a,Sold to,Buyout of BAR,https://en.wikipedia.org/wiki/Honda_in_Formula_One
+brawn,Brawn,Tyrell/BAR/Honda/Mercedes,#33d9b2,Sold to,Buyout of Honda,https://en.wikipedia.org/wiki/Brawn_GP
+mercedes,Mercedes,Tyrell/BAR/Honda/Mercedes,#00D2BE,,"Formed in 1954, withdraw in 1955, then returned in 2010 after buyout of Brawn.",https://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One
+benetton,Benetton,Renault/Lotus/Benetton,#12cff3,,"In 2000, the team was purchased by Renault, but competed as Benetton for the 2000 and 2001 seasons. In 2002, the team became Renault F1.",https://en.wikipedia.org/wiki/Benetton_Formula
+renault,Renault,Renault/Lotus/Benetton,#FFD800,Sold to,Buyout of Benetton,https://en.wikipedia.org/wiki/Renault_in_Formula_One
+lotusf1,Lotus F1,Renault/Lotus/Benetton,#FFB800,Renamed,Temporary rename of Renault.,https://en.wikipedia.org/wiki/Lotus_F1
+jordan,Jordan,Racing Point-Force India-Jordan,#807a0e,,Started by Eddie Jordan in 1991,https://en.wikipedia.org/wiki/Jordan_Grand_Prix
+midland,Midland,Racing Point-Force India-Jordan,#004400,Sold to,Buyout of Jordan,https://en.wikipedia.org/wiki/Midland_F1_Racing
+spyker,Spyker,Racing Point-Force India-Jordan,#ff0000,Sold to,Buyout of Midland,https://en.wikipedia.org/wiki/Spyker_F1
+forceindia,Force India,Racing Point-Force India-Jordan,#d35400,Sold to,Buyout of Spyker,https://en.wikipedia.org/wiki/Force_India
+racingpointforceindia,Racing Point FI,Racing Point-Force India-Jordan,#F596C8,Sold to,Buyout of Force India,https://en.wikipedia.org/wiki/Racing_Point_Force_India
+racingpoint,Racing Point,Racing Point-Force India-Jordan,#F596C8,Renamed,Renamed from Racing Point Force India,https://en.wikipedia.org/wiki/Racing_Point_F1_Team
+stewart,Stewart,Red Bull-Jaguar-Stewart,#000000,,"At the end of 1999, Ford bought the team outright and it was renamed Jaguar Racing.",https://en.wikipedia.org/wiki/Stewart_Grand_Prix
+jaguar,Jaguar,Red Bull-Jaguar-Stewart,#20bf6b,Sold to,Buyout of Stewart,https://en.wikipedia.org/wiki/Jaguar_Racing
+redbull,Red Bull,Red Bull-Jaguar-Stewart,#1E41FF,Sold to,Buyout of Jaguar,https://en.wikipedia.org/wiki/Red_Bull_Racing
+minardi,Minardi,Minardi/Torro Rosso,#26de81,,,https://en.wikipedia.org/wiki/Minardi
+torrorosso,Torro Rosso,Minardi/Torro Rosso,#469BFF,Sold to,Buyout of Minardi,https://en.wikipedia.org/wiki/Scuderia_Toro_Rosso
+teamlotus,Team Lotus,Team Lotus/Caterham,#009432,,,https://en.wikipedia.org/wiki/Team_Lotus_(2010%E2%80%9311)
+caterham,Caterham,Team Lotus/Caterham,#006266,Renamed,Renamed from Team Lotus,https://en.wikipedia.org/wiki/Caterham_F1
+superaguri,Super Aguri,Arrows/Super Aguri,#6D214F,,* double check,
+arrows,Arrows,Arrows/Super Aguri,#a7b3b9,,Arrows was known as Footwork from 1991 to 1996.,
+footwork,Footwork,Arrows/Super Aguri,#ba352c,Renamed,was known as Footwork from 1991 to 1996.,
+prost,Prost,Prost,#2323ed,Renamed,,
+ligier,Equipe Ligier,Prost,#130101,,Sold to Alain Prost and became Prost Grand Prix in 1997.,
+virgin,Virgin,Virgin/Marussia/Manor,#e74c3c,Sold to,Buyout of Manor,https://en.wikipedia.org/wiki/Virgin_Racing
+manorracing,MRT,Virgin/Marussia/Manor,#323232,,"Preceeded Virgin, renamed back after takeover by Marussia",https://en.wikipedia.org/wiki/Manor_Racing
+marussia,Marussia,Virgin/Marussia/Manor,#6E0000,Sold to,Buyout of Virgin,https://en.wikipedia.org/wiki/Marussia_F1
+pacific,Pacific,,#2a86c9,,,
+simtek,Simtek,,#74f0b6,,,
+toyota,Toyota,,#b33939,,,https://en.wikipedia.org/wiki/Toyota_Racing_(Formula_One_team)
+haas,Haas,,#bd9e57,,No relation to Haas Lola,
+march,March,March/Leyton,#f5242e,,,
+forti,Forti,,#d8b757,,,https://en.wikipedia.org/wiki/Forti
+hrt,HRT,,#DA0100,,,
+brabham,Brabham,,#7E8289,,,https://en.wikipedia.org/wiki/Brabham
+fondmetal,Fondmetal,Osella-Fondmetal,#3F3F35,,,
+dallara,Dallara,,#C8281E,,Designer of Haas F1 cars,
+andreamoda,Andrea Moda,Coloni/Andrea Moda,#0B0B09,Sold to,Buyout of Coloni,https://en.wikipedia.org/wiki/Andrea_Moda_Formula
+coloni,Coloni,Coloni/Andrea Moda,#EFE208,,,https://en.wikipedia.org/wiki/Scuderia_Coloni
+venturi,Venturi,Larousse-Venturi,#050509,,,
+mastercardlola,MasterCard Lola,Lola,#F07805,,,
+lolabms,Lola BMS Scuderia Italia,Lola,#f77b0d,,,
+larrousse,Larrousse,Larrousse-Venturi,#30264d,,,
+lambo,Modena Team SpA,,#0D3DAA,,,https://en.wikipedia.org/wiki/Modena_(racing_team)
+ags,AGS,,#E3242F,,,
+leytonhouse,Layton House,March/Leyton,#45CDE3,,,https://en.wikipedia.org/wiki/Leyton_House_Racing
+lola,Lola,,#26293F,,,
+osella,Osella,Osella-Fondmetal,#3483D1,,,https://en.wikipedia.org/wiki/Osella
+eurobrun,EuroBrun,Alpha-Brun-EuroBrun,#ED4D2E,,Fromed from Alpha and Brun,https://en.wikipedia.org/wiki/EuroBrun
+life,Life,,#FF214A,,,https://en.wikipedia.org/wiki/Life_Racing_Engines
+onyx,Onyx,,#9BE78B,,,https://en.wikipedia.org/wiki/Onyx_Grand_Prix
