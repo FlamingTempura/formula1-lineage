@@ -3,265 +3,266 @@
 
 const idify = str => 'i-' + str.toLowerCase().replace(/[^a-z0-9]+/, '-');
 
-const kludges = [ // used to manually change horizontal position of drivers within each year
-	[2019, 'alpharomeo', 'RAI', 'GIO'],
-	[2018, 'alpharomeo', 'LEC', 'ERI'],
+// const kludges = [ // used to manually change horizontal position of drivers within each year
+// 	[2019, 'alpharomeo', 'RAI', 'GIO'],
+// 	[2018, 'alpharomeo', 'LEC', 'ERI'],
 	
-	[2017, 'sauber', 'GIO', 'ERI'],
-	[2016, 'sauber', 'NAS', 'ERI'],
-	[2015, 'sauber', 'NAS', 'ERI'],
-	[2012, 'sauber', 'PER', 'KOB'],
-	[2011, 'sauber', 'PER', 'KOB'],	
-	[2004, 'sauber', 'MAS', 'FIS'],
-	[2002, 'sauber', 'MAS', 'FRE'],
-	[2001, 'sauber', 'RAI', 'HEI'],
-	[2000, 'sauber', 'SAL', 'DIN'],
-	[1999, 'sauber', 'DIN', 'ALE'],
-	[1998, 'sauber', 'HER', 'ALE'],
-	[1994, 'sauber', 'FRE', 'CES'],
-	[1994, 'sauber', 'WEN', 'CES'],
-	[1994, 'sauber', 'LEH', 'CES'],
-	[1993, 'sauber', 'WEN', 'LEH'],
+// 	[2017, 'sauber', 'GIO', 'ERI'],
+// 	[2016, 'sauber', 'NAS', 'ERI'],
+// 	[2015, 'sauber', 'NAS', 'ERI'],
+// 	[2012, 'sauber', 'PER', 'KOB'],
+// 	[2011, 'sauber', 'PER', 'KOB'],	
+// 	[2004, 'sauber', 'MAS', 'FIS'],
+// 	[2002, 'sauber', 'MAS', 'FRE'],
+// 	[2001, 'sauber', 'RAI', 'HEI'],
+// 	[2000, 'sauber', 'SAL', 'DIN'],
+// 	[1999, 'sauber', 'DIN', 'ALE'],
+// 	[1998, 'sauber', 'HER', 'ALE'],
+// 	[1994, 'sauber', 'FRE', 'CES'],
+// 	[1994, 'sauber', 'WEN', 'CES'],
+// 	[1994, 'sauber', 'LEH', 'CES'],
+// 	[1993, 'sauber', 'WEN', 'LEH'],
 
-	[2010, 'bmwsauber', 'KOB', 'HEI'],
-	[2010, 'bmwsauber', 'DLR', 'HEI'],
+// 	[2010, 'bmwsauber', 'KOB', 'HEI'],
+// 	[2010, 'bmwsauber', 'DLR', 'HEI'],
 
-	[2003, 'sauber', 'HEI', 'FRE'],
+// 	[2003, 'sauber', 'HEI', 'FRE'],
 
-	[2019, 'racingpoint', 'STR', 'PER'],
-	[2013, 'forceindia', 'SUT', 'DIR'],
-	[2012, 'forceindia', 'HUL', 'DIR'],
-	[2011, 'forceindia', 'HUL', 'DIR'],
-	[2011, 'forceindia', 'SUT', 'DIR'],
-	[2010, 'forceindia', 'SUT', 'LIU'],
-	[2009, 'forceindia', 'SUT', 'LIU'],
+// 	[2019, 'racingpoint', 'STR', 'PER'],
+// 	[2013, 'forceindia', 'SUT', 'DIR'],
+// 	[2012, 'forceindia', 'HUL', 'DIR'],
+// 	[2011, 'forceindia', 'HUL', 'DIR'],
+// 	[2011, 'forceindia', 'SUT', 'DIR'],
+// 	[2010, 'forceindia', 'SUT', 'LIU'],
+// 	[2009, 'forceindia', 'SUT', 'LIU'],
 
-	[2013, 'caterham', 'VDG', 'PIC'],
-	[2012, 'caterham', 'PET', 'KOV'],
+// 	[2013, 'caterham', 'VDG', 'PIC'],
+// 	[2012, 'caterham', 'PET', 'KOV'],
 
-	[2012, 'marussia', 'PIC', 'GLO'],
-	[2010, 'marussia', 'DIG', 'GLO'],
+// 	[2012, 'marussia', 'PIC', 'GLO'],
+// 	[2010, 'marussia', 'DIG', 'GLO'],
 
-	[2012, 'hrt', 'DLR', 'KAR'],
-	[2011, 'hrt', 'RIC', 'KAR'],
-	[2010, 'hrt', 'SEN', 'KLI'],
-	[2010, 'hrt', 'SEN', 'CHA'],
-	[2010, 'hrt', 'YAM', 'KLI'],
+// 	[2012, 'hrt', 'DLR', 'KAR'],
+// 	[2011, 'hrt', 'RIC', 'KAR'],
+// 	[2010, 'hrt', 'SEN', 'KLI'],
+// 	[2010, 'hrt', 'SEN', 'CHA'],
+// 	[2010, 'hrt', 'YAM', 'KLI'],
 
-	[1996, 'footwork', 'VER', 'ROS'],
+// 	[1996, 'footwork', 'VER', 'ROS'],
 
-	[1995, 'simtek', 'VER', 'SCH'],
+// 	[1995, 'simtek', 'VER', 'SCH'],
 
-	[2016, 'manorracing', 'WEH', 'HAR'],
-	[2015, 'manorracing', 'STE', 'MER'],
+// 	[2016, 'manorracing', 'WEH', 'HAR'],
+// 	[2015, 'manorracing', 'STE', 'MER'],
 
-	[2006, 'superaguri', 'YAM', 'IDE'],
+// 	[2006, 'superaguri', 'YAM', 'IDE'],
 
-	[2009, 'toyota', 'KOB', 'GLO'],
-	[2009, 'toyota', 'TRU', 'GLO'],
-	[2008, 'toyota', 'TRU', 'GLO'],
-	[2004, 'toyota', 'TRU', 'MAT'],
-	[2004, 'toyota', 'ZON', 'MAT'],
-	[2004, 'toyota', 'ZON', 'PAN'],
-	[2003, 'toyota', 'PAN', 'MAT'],
-	[2002, 'toyota', 'SAL', 'MCN'],
+// 	[2009, 'toyota', 'KOB', 'GLO'],
+// 	[2009, 'toyota', 'TRU', 'GLO'],
+// 	[2008, 'toyota', 'TRU', 'GLO'],
+// 	[2004, 'toyota', 'TRU', 'MAT'],
+// 	[2004, 'toyota', 'ZON', 'MAT'],
+// 	[2004, 'toyota', 'ZON', 'PAN'],
+// 	[2003, 'toyota', 'PAN', 'MAT'],
+// 	[2002, 'toyota', 'SAL', 'MCN'],
 
-	[2019, 'redbull', 'VER', 'GAS'],
-	[2016, 'redbull', 'RIC', 'KVY'],
-	[2015, 'redbull', 'RIC', 'KVY'],
-	[2014, 'redbull', 'VET', 'RIC'],
-	[2006, 'redbull', 'KLI', 'DOO'],
-	[2013, 'redbull', 'WEB', 'VET'],
-	[2012, 'redbull', 'WEB', 'VET'],
-	[2011, 'redbull', 'WEB', 'VET'],
-	[2010, 'redbull', 'WEB', 'VET'],
-	[2009, 'redbull', 'WEB', 'VET'],
-	[2008, 'redbull', 'WEB', 'COU'],
-	[2007, 'redbull', 'WEB', 'COU'],
+// 	[2019, 'redbull', 'VER', 'GAS'],
+// 	[2016, 'redbull', 'RIC', 'KVY'],
+// 	[2015, 'redbull', 'RIC', 'KVY'],
+// 	[2014, 'redbull', 'VET', 'RIC'],
+// 	[2006, 'redbull', 'KLI', 'DOO'],
+// 	[2013, 'redbull', 'WEB', 'VET'],
+// 	[2012, 'redbull', 'WEB', 'VET'],
+// 	[2011, 'redbull', 'WEB', 'VET'],
+// 	[2010, 'redbull', 'WEB', 'VET'],
+// 	[2009, 'redbull', 'WEB', 'VET'],
+// 	[2008, 'redbull', 'WEB', 'COU'],
+// 	[2007, 'redbull', 'WEB', 'COU'],
 
 
-	[2019, 'ferrari', 'VET', 'LEC'],
-	[2018, 'ferrari', 'VET', 'RAI'],
-	[2017, 'ferrari', 'VET', 'RAI'],
-	[2016, 'ferrari', 'VET', 'RAI'],
-	[2015, 'ferrari', 'VET', 'RAI'],
+// 	[2019, 'ferrari', 'VET', 'LEC'],
+// 	[2018, 'ferrari', 'VET', 'RAI'],
+// 	[2017, 'ferrari', 'VET', 'RAI'],
+// 	[2016, 'ferrari', 'VET', 'RAI'],
+// 	[2015, 'ferrari', 'VET', 'RAI'],
 
-	[2013, 'ferrari', 'MAS', 'ALO'],
-	[2012, 'ferrari', 'MAS', 'ALO'],
-	[2011, 'ferrari', 'MAS', 'ALO'],
-	[2010, 'ferrari', 'MAS', 'ALO'],
-	[2009, 'ferrari', 'MAS', 'BAD'],
-	[2009, 'ferrari', 'RAI', 'FIS'],
-	[2006, 'ferrari', 'MSC', 'MAS'],
-	[2005, 'ferrari', 'MSC', 'BAR'],
-	[2004, 'ferrari', 'MSC', 'BAR'],
-	[2003, 'ferrari', 'MSC', 'BAR'],
-	[2002, 'ferrari', 'MSC', 'BAR'],
-	[2001, 'ferrari', 'MSC', 'BAR'],
-	[2000, 'ferrari', 'MSC', 'BAR'],
-	[1999, 'ferrari', 'MSC', 'IRV'],
-	[1998, 'ferrari', 'MSC', 'IRV'],
-	[1997, 'ferrari', 'MSC', 'IRV'],
-	[1996, 'ferrari', 'MSC', 'IRV'],
-	[1991, 'ferrari', 'PRO', 'ALE'],
-	[1991, 'ferrari', 'ALE', 'MOR'],
-	[1990, 'ferrari', 'PRO', 'MAN'],
+// 	[2013, 'ferrari', 'MAS', 'ALO'],
+// 	[2012, 'ferrari', 'MAS', 'ALO'],
+// 	[2011, 'ferrari', 'MAS', 'ALO'],
+// 	[2010, 'ferrari', 'MAS', 'ALO'],
+// 	[2009, 'ferrari', 'MAS', 'BAD'],
+// 	[2009, 'ferrari', 'RAI', 'FIS'],
+// 	[2006, 'ferrari', 'MSC', 'MAS'],
+// 	[2005, 'ferrari', 'MSC', 'BAR'],
+// 	[2004, 'ferrari', 'MSC', 'BAR'],
+// 	[2003, 'ferrari', 'MSC', 'BAR'],
+// 	[2002, 'ferrari', 'MSC', 'BAR'],
+// 	[2001, 'ferrari', 'MSC', 'BAR'],
+// 	[2000, 'ferrari', 'MSC', 'BAR'],
+// 	[1999, 'ferrari', 'MSC', 'IRV'],
+// 	[1998, 'ferrari', 'MSC', 'IRV'],
+// 	[1997, 'ferrari', 'MSC', 'IRV'],
+// 	[1996, 'ferrari', 'MSC', 'IRV'],
+// 	[1991, 'ferrari', 'PRO', 'ALE'],
+// 	[1991, 'ferrari', 'ALE', 'MOR'],
+// 	[1990, 'ferrari', 'PRO', 'MAN'],
 
-	[2000, 'benetton', 'WUR', 'FIS'],
-	[1999, 'benetton', 'WUR', 'FIS'],
-	[1998, 'benetton', 'WUR', 'FIS'],
-	[1995, 'benetton', 'MSC', 'HER'],
-	[1994, 'benetton', 'MSC', 'HER'],
-	[1994, 'benetton', 'LEH', 'MSC'],
-	[1994, 'benetton', 'VER', 'HER'],
-	[1993, 'benetton', 'PAT', 'MSC'],
-	[1991, 'benetton', 'PIQ', 'MSC'],
-	[1991, 'benetton', 'PIQ', 'MOR'],
-	[1990, 'benetton', 'PIQ', 'MOR'],
+// 	[2000, 'benetton', 'WUR', 'FIS'],
+// 	[1999, 'benetton', 'WUR', 'FIS'],
+// 	[1998, 'benetton', 'WUR', 'FIS'],
+// 	[1995, 'benetton', 'MSC', 'HER'],
+// 	[1994, 'benetton', 'MSC', 'HER'],
+// 	[1994, 'benetton', 'LEH', 'MSC'],
+// 	[1994, 'benetton', 'VER', 'HER'],
+// 	[1993, 'benetton', 'PAT', 'MSC'],
+// 	[1991, 'benetton', 'PIQ', 'MSC'],
+// 	[1991, 'benetton', 'PIQ', 'MOR'],
+// 	[1990, 'benetton', 'PIQ', 'MOR'],
 
-	[1990, 'eurobrun', 'MOR', 'LAN'],
+// 	[1990, 'eurobrun', 'MOR', 'LAN'],
 	
-	[2017, 'renault', 'PAL', 'HUL'],
-	[2016, 'renault', 'PAL', 'MAG'],
-	[2007, 'renault', 'KOV', 'FIS'],
-	// [2018, 'renault', 'SAI', 'HUL'],
-	// [2017, 'renault', 'SAI', 'HUL'],
+// 	[2017, 'renault', 'PAL', 'HUL'],
+// 	[2016, 'renault', 'PAL', 'MAG'],
+// 	[2007, 'renault', 'KOV', 'FIS'],
+// 	// [2018, 'renault', 'SAI', 'HUL'],
+// 	// [2017, 'renault', 'SAI', 'HUL'],
 
 
-	[2019, 'haas', 'MAG', 'GRO'],
-	[2018, 'haas', 'MAG', 'GRO'],
-	[2017, 'haas', 'MAG', 'GRO'],
-	[2016, 'haas', 'GUT', 'GRO'],
+// 	[2019, 'haas', 'MAG', 'GRO'],
+// 	[2018, 'haas', 'MAG', 'GRO'],
+// 	[2017, 'haas', 'MAG', 'GRO'],
+// 	[2016, 'haas', 'GUT', 'GRO'],
 
-	[2009, 'brawn', 'BUT', 'BAR'],
-	[2008, 'honda', 'BUT', 'BAR'],
-	[2007, 'honda', 'BUT', 'BAR'],
-	[2006, 'honda', 'BUT', 'BAR'],
+// 	[2009, 'brawn', 'BUT', 'BAR'],
+// 	[2008, 'honda', 'BUT', 'BAR'],
+// 	[2007, 'honda', 'BUT', 'BAR'],
+// 	[2006, 'honda', 'BUT', 'BAR'],
 
-	[2007, 'mclaren', 'HAM', 'ALO'],
-	[2006, 'mclaren', 'RAI', 'MOY'],
-	[2005, 'mclaren', 'RAI', 'MOY'],
-	[2004, 'mclaren', 'RAI', 'COU'],
-	[2003, 'mclaren', 'RAI', 'COU'],
-	[2002, 'mclaren', 'RAI', 'COU'],
-	[1994, 'mclaren', 'HAK', 'ALL'],
+// 	[2007, 'mclaren', 'HAM', 'ALO'],
+// 	[2006, 'mclaren', 'RAI', 'MOY'],
+// 	[2005, 'mclaren', 'RAI', 'MOY'],
+// 	[2004, 'mclaren', 'RAI', 'COU'],
+// 	[2003, 'mclaren', 'RAI', 'COU'],
+// 	[2002, 'mclaren', 'RAI', 'COU'],
+// 	[1994, 'mclaren', 'HAK', 'ALL'],
 
-	[1995, 'ligier', 'SUZ', 'PAN'],
-	[1993, 'ligier', 'BRU', 'BLU'],
+// 	[1995, 'ligier', 'SUZ', 'PAN'],
+// 	[1993, 'ligier', 'BRU', 'BLU'],
 
-	[2002, 'bar', 'VIL', 'PAN'],
-	[2001, 'bar', 'VIL', 'PAN'],
+// 	[2002, 'bar', 'VIL', 'PAN'],
+// 	[2001, 'bar', 'VIL', 'PAN'],
 
-	[2017, 'torrorosso', 'SAI', 'GAS'],
-	[2017, 'torrorosso', 'GAS', 'KVY'],
-	[2017, 'torrorosso', 'GAS', 'HAR'],
-	[2015, 'torrorosso', 'VER', 'SAI'],
-	[2008, 'torrorosso', 'VET', 'BOU'],
-	[2007, 'torrorosso', 'VET', 'LIU'],
-	[2007, 'torrorosso', 'LIU', 'SPE'],
+// 	[2017, 'torrorosso', 'SAI', 'GAS'],
+// 	[2017, 'torrorosso', 'GAS', 'KVY'],
+// 	[2017, 'torrorosso', 'GAS', 'HAR'],
+// 	[2015, 'torrorosso', 'VER', 'SAI'],
+// 	[2008, 'torrorosso', 'VET', 'BOU'],
+// 	[2007, 'torrorosso', 'VET', 'LIU'],
+// 	[2007, 'torrorosso', 'LIU', 'SPE'],
 
-	[2016, 'torrorosso', 'SAI', 'KVY'],
-	[2016, 'torrorosso', 'VER', 'SAI'],
-	[2016, 'torrorosso', 'SAI', 'KVY'],
+// 	[2016, 'torrorosso', 'SAI', 'KVY'],
+// 	[2016, 'torrorosso', 'VER', 'SAI'],
+// 	[2016, 'torrorosso', 'SAI', 'KVY'],
 
-	[2019, 'williams', 'RUS', 'KUB'],
-	[2017, 'williams', 'MAS', 'DIR'],
-	[2017, 'williams', 'STR', 'DIR'],
-	[2016, 'williams', 'MAS', 'BOT'],
-	[2015, 'williams', 'MAS', 'BOT'],
-	[2014, 'williams', 'MAS', 'BOT'],
-	[2007, 'williams', 'WUR', 'ROS'],
-	[2005, 'williams', 'PIZ', 'HEI'],
-	[2004, 'williams', 'MOY', 'GEN'],
-	[2003, 'williams', 'MOY', 'GEN'],
-	[2000, 'williams', 'RSC', 'BUT'],
-	[1999, 'williams', 'ZAN', 'RSC'],
-	[1998, 'williams', 'VIL', 'FRE'],
-	[1997, 'williams', 'VIL', 'FRE'],
-	[1996, 'williams', 'VIL', 'HIL'],
-	[1994, 'williams', 'SEN', 'COU'],
-	[1994, 'williams', 'COU', 'HIL'],
-	[1994, 'williams', 'MAN', 'COU'],
-	[1993, 'williams', 'PRO', 'HIL'],
-	[1990, 'williams', 'PAT', 'BOU'],
+// 	[2019, 'williams', 'RUS', 'KUB'],
+// 	[2017, 'williams', 'MAS', 'DIR'],
+// 	[2017, 'williams', 'STR', 'DIR'],
+// 	[2016, 'williams', 'MAS', 'BOT'],
+// 	[2015, 'williams', 'MAS', 'BOT'],
+// 	[2014, 'williams', 'MAS', 'BOT'],
+// 	[2007, 'williams', 'WUR', 'ROS'],
+// 	[2005, 'williams', 'PIZ', 'HEI'],
+// 	[2004, 'williams', 'MOY', 'GEN'],
+// 	[2003, 'williams', 'MOY', 'GEN'],
+// 	[2000, 'williams', 'RSC', 'BUT'],
+// 	[1999, 'williams', 'ZAN', 'RSC'],
+// 	[1998, 'williams', 'VIL', 'FRE'],
+// 	[1997, 'williams', 'VIL', 'FRE'],
+// 	[1996, 'williams', 'VIL', 'HIL'],
+// 	[1994, 'williams', 'SEN', 'COU'],
+// 	[1994, 'williams', 'COU', 'HIL'],
+// 	[1994, 'williams', 'MAN', 'COU'],
+// 	[1993, 'williams', 'PRO', 'HIL'],
+// 	[1990, 'williams', 'PAT', 'BOU'],
 
-	[1992, 'brabham', 'HIL', 'AMA'],
-	[1991, 'brabham', 'BRU', 'BLU'],
-	[1990, 'brabham', 'MOD', 'FOI'],
-	[1990, 'brabham', 'MOD', 'BRA'],
+// 	[1992, 'brabham', 'HIL', 'AMA'],
+// 	[1991, 'brabham', 'BRU', 'BLU'],
+// 	[1990, 'brabham', 'MOD', 'FOI'],
+// 	[1990, 'brabham', 'MOD', 'BRA'],
 
-	[1992, 'venturi', 'KAT', 'GAC'],
+// 	[1992, 'venturi', 'KAT', 'GAC'],
 
-	[1990, 'dallara', 'MOR', 'CES'],
-	[1991, 'dallara', 'PIR', 'LEH'],
+// 	[1990, 'dallara', 'MOR', 'CES'],
+// 	[1991, 'dallara', 'PIR', 'LEH'],
 
-	[1996, 'forti', 'MON', 'BAD'],
+// 	[1996, 'forti', 'MON', 'BAD'],
 
-	[1994, 'larrousse', 'DEL', 'BER'],
-	[1994, 'larrousse', 'NOD', 'DAL'],
+// 	[1994, 'larrousse', 'DEL', 'BER'],
+// 	[1994, 'larrousse', 'NOD', 'DAL'],
 
-	[2004, 'jaguar', 'WEB', 'KLI'],
-	[2001, 'jaguar', 'IRV', 'BUR'],
-	[2000, 'jaguar', 'IRV', 'BUR'],
+// 	[2004, 'jaguar', 'WEB', 'KLI'],
+// 	[2001, 'jaguar', 'IRV', 'BUR'],
+// 	[2000, 'jaguar', 'IRV', 'BUR'],
 
-	[2006, 'midland', 'MON', 'ALB'],
-	[2005, 'jordan', 'MON', 'KAR'],
-	[2003, 'jordan', 'FIS', 'BAU'],
-	[2002, 'jordan', 'SAT', 'FIS'],
-	[2001, 'jordan', 'ZON', 'ALE'],
-	[1998, 'jordan', 'RSC', 'HIL'],
-	[1995, 'jordan', 'IRV', 'BAR'],
-	[1994, 'jordan', 'CES', 'BAR'],
-	[1994, 'jordan', 'IRV', 'BAR'],
+// 	[2006, 'midland', 'MON', 'ALB'],
+// 	[2005, 'jordan', 'MON', 'KAR'],
+// 	[2003, 'jordan', 'FIS', 'BAU'],
+// 	[2002, 'jordan', 'SAT', 'FIS'],
+// 	[2001, 'jordan', 'ZON', 'ALE'],
+// 	[1998, 'jordan', 'RSC', 'HIL'],
+// 	[1995, 'jordan', 'IRV', 'BAR'],
+// 	[1994, 'jordan', 'CES', 'BAR'],
+// 	[1994, 'jordan', 'IRV', 'BAR'],
 	
-	[1993, 'jordan', 'CAP', 'BAR'],
-	[1993, 'jordan', 'CAP', 'API'],
-	[1993, 'jordan', 'IRV', 'BOU'],
-	[1993, 'jordan', 'NAS', 'BOU'],
-	[1992, 'jordan', 'MOD', 'GUG'],
+// 	[1993, 'jordan', 'CAP', 'BAR'],
+// 	[1993, 'jordan', 'CAP', 'API'],
+// 	[1993, 'jordan', 'IRV', 'BOU'],
+// 	[1993, 'jordan', 'NAS', 'BOU'],
+// 	[1992, 'jordan', 'MOD', 'GUG'],
 
-	[1991, 'jordan', 'ZAN', 'GAC'],
-	[1991, 'jordan', 'MSC', 'ZAN'],
-	[1991, 'jordan', 'MSC', 'CES'],
+// 	[1991, 'jordan', 'ZAN', 'GAC'],
+// 	[1991, 'jordan', 'MSC', 'ZAN'],
+// 	[1991, 'jordan', 'MSC', 'CES'],
 
-	[1993, 'march', 'LAM', 'GOU'],
-	[1992, 'march', 'WEN', 'BEL'],
-	[1992, 'march', 'NAS', 'LAM'],
+// 	[1993, 'march', 'LAM', 'GOU'],
+// 	[1992, 'march', 'WEN', 'BEL'],
+// 	[1992, 'march', 'NAS', 'LAM'],
 
-	[1993, 'minardi', 'GOU', 'BAR'],
+// 	[1993, 'minardi', 'GOU', 'BAR'],
 
-	[2007, 'spyker', 'WIN', 'ALB'],
+// 	[2007, 'spyker', 'WIN', 'ALB'],
 
-	[2015, 'lotusf1', 'MAL', 'GRO'],
-	[2014, 'lotusf1', 'MAL', 'GRO'],
-	[2013, 'lotusf1', 'RAI', 'KOV'],
-	[2013, 'lotusf1', 'RAI', 'GRO'],
-	[2012, 'lotusf1', 'RAI', 'DAM'],
+// 	[2015, 'lotusf1', 'MAL', 'GRO'],
+// 	[2014, 'lotusf1', 'MAL', 'GRO'],
+// 	[2013, 'lotusf1', 'RAI', 'KOV'],
+// 	[2013, 'lotusf1', 'RAI', 'GRO'],
+// 	[2012, 'lotusf1', 'RAI', 'DAM'],
 
-	[2001, 'arrows', 'VER', 'BER'],
-	[1997, 'arrows', 'HIL', 'DIN'],
+// 	[2001, 'arrows', 'VER', 'BER'],
+// 	[1997, 'arrows', 'HIL', 'DIN'],
 
-	[2011, 'teamlotus', 'KOV', 'CHA'],
-	[2011, 'teamlotus', 'TRU', 'CHA'],
+// 	[2011, 'teamlotus', 'KOV', 'CHA'],
+// 	[2011, 'teamlotus', 'TRU', 'CHA'],
 
-	[2000, 'prost', 'HEI', 'ALE'],
-	[1999, 'prost', 'TRU', 'PAN'],
-	[1998, 'prost', 'TRU', 'PAN'],
-	[1997, 'prost', 'TRU', 'PAN'],
+// 	[2000, 'prost', 'HEI', 'ALE'],
+// 	[1999, 'prost', 'TRU', 'PAN'],
+// 	[1998, 'prost', 'TRU', 'PAN'],
+// 	[1997, 'prost', 'TRU', 'PAN'],
 
-	[2003, 'minardi', 'WIL', 'KIE'],
-	[2003, 'minardi', 'KIE', 'VER'],
-	[1998, 'minardi', 'TUE', 'NAK'],
-	[1996, 'minardi', 'LAV', 'LAM'],
-	[1995, 'minardi', 'MAR', 'BAD'],
-	[1995, 'minardi', 'LAM', 'BAD'],
+// 	[2003, 'minardi', 'WIL', 'KIE'],
+// 	[2003, 'minardi', 'KIE', 'VER'],
+// 	[1998, 'minardi', 'TUE', 'NAK'],
+// 	[1996, 'minardi', 'LAV', 'LAM'],
+// 	[1995, 'minardi', 'MAR', 'BAD'],
+// 	[1995, 'minardi', 'LAM', 'BAD'],
 
-	[1998, 'stewart', 'VER', 'MAG'],
-];
+// 	[1998, 'stewart', 'VER', 'MAG'],
+// ];
 
 const init = async () => {
 	const constructors = await d3.csv('data/constructors.csv');
 	const drivers = await d3.csv('data/drivers.csv');
+	const formations = await d3.csv('data/formations.csv');
 	const lineages = [];
 	const years = Object.keys(drivers[0]).map(Number).filter(n => !isNaN(n)).sort();
 
@@ -321,14 +322,31 @@ const init = async () => {
 		}
 	}
 
-	for (const [year, constructor, driverIdA, driverIdB] of kludges) {
-		const driverA = entries.find(e => e.year === year && e.constructor.id === constructor && e.driver.id === driverIdA);
-		const driverB = entries.find(e => e.year === year && e.constructor.id === constructor && e.driver.id === driverIdB);
-		if (!driverA || !driverB) { continue; }
-		if (driverA.car > driverB.car) {
-			const [carA, carB] = [driverA.car, driverB.car];
-			driverA.car = carB;
-			driverB.car = carA;
+	// for (const [year, constructor, driverIdA, driverIdB] of kludges) {
+	// 	const driverA = entries.find(e => e.year === year && e.constructor.id === constructor && e.driver.id === driverIdA);
+	// 	const driverB = entries.find(e => e.year === year && e.constructor.id === constructor && e.driver.id === driverIdB);
+	// 	if (!driverA || !driverB) { continue; }
+	// 	if (driverA.car > driverB.car) {
+	// 		const [carA, carB] = [driverA.car, driverB.car];
+	// 		driverA.car = carB;
+	// 		driverB.car = carA;
+	// 	}
+	// }
+
+	for (let { constructor, year, ...cars } of formations) {
+		year = Number(year);
+		const teamentries = entries.filter(e => e.year === year && e.constructor.id === constructor);
+		const drivers = teamentries.map(e => e.driver.id);
+		const wantedOrder = Object.keys(cars).sort().map(k => cars[k]).filter(v => v);
+		const valid = drivers.every(a => wantedOrder.includes(a));
+		if (!valid || drivers.length !== wantedOrder.length) {
+			console.error('formation is invalid:', constructor, year, wantedOrder, 'expected', drivers);
+			continue;
+		}
+		for (let i = 0; i < wantedOrder.length; i++) {
+			const driver = wantedOrder[i];
+			const entry = teamentries.find(e => e.driver.id === driver);
+			entry.car = i;
 		}
 	}
 
@@ -363,6 +381,10 @@ const init = async () => {
 	const y = d3.scaleLinear()
 		.domain(d3.extent(years))
 		.range([height, 0]);
+
+	const curveOffsets = d3.scaleBand()
+		.domain(lineages.map(c => c.id))
+		.range([0, 20]);
 
 	let lastSelected;
 	const update = () => {
@@ -421,7 +443,7 @@ const init = async () => {
 	const lineageg = container.selectAll('.lineage')
 		.data(lineages)
 		.enter().append('g')
-			.attr('transform', d => `translate(${x(d.row) - x.bandwidth() / 2},${y(Math.max(...d.years))})`);
+			.attr('transform', d => `translate(${x(d.row)},${y(Math.max(...d.years))})`);
 
 	lineageg.append('rect')
 		.attr('fill', d => {
@@ -439,7 +461,7 @@ const init = async () => {
 		})
 		.attr('rx', 5)
 		.attr('ry', 5)
-		.attr('x', -6)
+		.attr('x', -x.bandwidth() / 2 + 2)
 		.attr('y', -50)
 		.attr('opacity', '0.2')
 		.attr('width', () => x.bandwidth() - 4)
@@ -482,24 +504,21 @@ const init = async () => {
 		.attr('class', 'title')
 		.attr('text-anchor', 'middle')
 		.attr('fill', d => d.color)
-		.attr('y', 4)
-		.attr('transform', d => `translate(${x.bandwidth() / 2 - 8},${y(d.yearEnd) - y(Math.max(...d.lineage.years)) - 30})`)
+		.attr('y', d => y(d.yearEnd) - y(Math.max(...d.lineage.years)) - 26)
 		.text(d => d.name);
 
 	title.append('text')
 		.attr('text-anchor', 'middle')
 		.attr('fill', '#000')
 		.attr('opacity', 0.4)
-		.attr('y', -38)
-		.attr('transform', d => `translate(${x.bandwidth() / 2 - 8},${y(d.yearStart) - y(Math.max(...d.lineage.years)) - 30})`)
+		.attr('y', d => y(d.yearStart) - y(Math.max(...d.lineage.years)) - 68)
 		.text(d => d.action ? `${d.action}` : '');
 
 	title.append('text')
 		.attr('text-anchor', 'middle')
 		.attr('fill', '#000')
 		.attr('opacity', 0.4)
-		.attr('y', -28)
-		.attr('transform', d => `translate(${x.bandwidth() / 2 - 8},${y(d.yearStart) - y(Math.max(...d.lineage.years)) - 30})`)
+		.attr('y', d => y(d.yearStart) - y(Math.max(...d.lineage.years)) - 58)
 		.text(d => d.action ? `${d.name}` : '');
 
 	container.selectAll('.year')
@@ -509,14 +528,10 @@ const init = async () => {
 			.attr('text-anchor', 'start')
 			.attr('x', -margin.left)
 			.attr('y', d => y(d));
-			//.attr('transform', d => `translate(0, ${y(d)})`);
 
 	const carPos = entry => {
-		if (entry.totalcars === 2) {
-			return x(entry.constructor.lineage.row) + (entry.car === 0 ? -1.25 * ENTRY_SPACE : 0.25 * ENTRY_SPACE);
-		} else {
-			return x(entry.constructor.lineage.row) + (entry.car - entry.totalcars / 2) * ENTRY_SPACE;
-		}
+		const space = (entry.totalcars === 2 ? 1.7 : entry.totalcars === 3 ? 1.2 : 1.0) * ENTRY_SPACE;
+		return x(entry.constructor.lineage.row) + (entry.car - (entry.totalcars - 1) / 2) * space;
 	};
 
 	const path = container.selectAll('.path')
@@ -529,8 +544,16 @@ const init = async () => {
 					y2 = Math.round(y(d.to.year)),
 					x2 = Math.round(carPos(d.to)) + 0.001, // add tiny about to avoid straight lines (gradients don't work) https://stackoverflow.com/questions/21638169/svg-line-with-gradient-stroke-wont-display-straight/34687362
 					yc = Math.round(y1 + (y2 - y1) / 2),
-					xc = Math.round(x1 + (x2 - x1) / 2);
-				return `M${x1} ${y1} Q ${x1} ${y1 - 30}, ${xc} ${yc} T ${x2} ${y2}`;
+					xc = Math.round(x1 + (x2 - x1) / 2);//,
+					//offset = curveOffsets(d.from.constructor.lineage.id);
+				//console.log(offset)
+				return [
+					'M', x1, y1, // move to start coordinate
+					'L', x1, y1 - 10,
+					'Q', x1, y1 - 36, xc, yc, // quadratic curve, with control point and the end point half-way
+					'T', x2, y2 + 10, // infer second quadrative curve to the end
+					'L', x2, y2
+				].join(' ');
 			})
 			.attr('stroke-dasharray', d => d.skippedSeasons ? '2 3' : 'none')
 			.attr('fill', 'none')
