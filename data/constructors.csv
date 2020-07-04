@@ -37,7 +37,7 @@ marussia,Marussia,Virgin/Marussia/Manor,#6E0000,Sold to,Buyout of Virgin,https:/
 pacific,Pacific,,#2a86c9,,,
 simtek,Simtek,,#74f0b6,,,
 toyota,Toyota,,#b33939,,,https://en.wikipedia.org/wiki/Toyota_Racing_(Formula_One_team)
-haas,Haas,,#bd9e57,,No relation to Haas Lola,
+haas,Haas,Hass/Alpha Tauri,#bd9e57,,No relation to Haas Lola,
 march,March,March/Leyton,#f5242e,,,
 forti,Forti,,#d8b757,,,https://en.wikipedia.org/wiki/Forti
 hrt,HRT,,#DA0100,,,
@@ -77,3 +77,4 @@ wolf,Wolf,Frank Williams-Wolf,chocolate,,,
 rebaque,Rebaque,,dodgerblue,,,
 frankwilliams,Frank Williams,Frank Williams-Wolf,mediumvioletred,,,
 merzario,Merzario,,orangered,,,
+alphatauri,AlphaTauri,Minardi/Torro Rosso,#b4b4b4,Renamed,,
