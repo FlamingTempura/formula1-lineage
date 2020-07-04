@@ -5,28 +5,72 @@ const MARGIN = { top: 50, right: 48, bottom: 30, left: 74 };
 const WIDTH = 1660 - MARGIN.left - MARGIN.right;
 const HEIGHT = 3000 - MARGIN.top - MARGIN.bottom;
 const ENTRY_SPACE = 16;
+/**
+ * Set to true to allow modifying driver orders
+ */
+const DEBUG = false;
 
+/**
+ * Generate a DOM safe ID
+ */
 const makeID = (str) => 'i-' + str.toLowerCase().replace(/[^a-z0-9]+/, '-');
+
 const uniq = (arr) => [...new Set(arr)];
 
+let gradientCount = 0;
+const generateGradient = (defs, ...stops) => {
+	// reverse is used when the link is vertical (when driver switches constructor within season)
+	if (uniq(stops.map((s) => s[1])).length === 1) {
+		return stops[0][1];
+	}
+	stops.sort((a, b) => a[0] - b[0]);
+	const id = 'grad-' + gradientCount++;
+	const gradient = defs
+		.append('linearGradient')
+		.attr('id', id)
+		.attr('x1', '0%')
+		.attr('y1', '0%')
+		.attr('x2', '0%')
+		.attr('y2', '100%');
+
+	for (const [offset, color] of stops) {
+		gradient
+			.append('stop')
+			.attr('offset', offset * 100 + '%')
+			.attr('stop-color', color);
+	}
+	return `url(#${id})`;
+};
+
+const swapEntries = (a, b) => {
+	const [carA, carB] = [a.car, b.car];
+	a.car = carB;
+	b.car = carA;
+};
+
 const init = async () => {
-	const constructors = await d3.csv('data/constructors.csv');
+	const constructors = new Map(
+		(await d3.csv('data/constructors.csv')).map((constructor) => [
+			constructor.id,
+			constructor,
+		])
+	);
 	const drivers = await d3.csv('data/drivers.csv');
 	const formations = await d3.csv('data/formations.csv');
 
-	const lineages = [];
+	const lineages = new Map();
 	const years = Object.keys(drivers[0])
 		.map(Number)
 		.filter((n) => !isNaN(n))
-		.sort();
+		.sort((a, b) => a - b);
 	const entries = [];
 	const links = [];
 
-	for (const constructor of constructors) {
+	for (const constructor of constructors.values()) {
 		if (!constructor.lineage) {
 			constructor.lineage = constructor.name;
 		}
-		let lineage = lineages.find((d) => d.name === constructor.lineage);
+		let lineage = lineages.get(constructor.lineage);
 		if (!lineage) {
 			lineage = {
 				id: makeID(constructor.lineage),
@@ -34,7 +78,7 @@ const init = async () => {
 				years: new Set(),
 				constructors: [],
 			};
-			lineages.push(lineage);
+			lineages.set(constructor.lineage, lineage);
 		}
 		constructor.lineage = lineage;
 		constructor.years = new Set();
@@ -42,8 +86,8 @@ const init = async () => {
 	}
 
 	for (const driver of drivers) {
-		let prev = null,
-			skippedSeasons = false;
+		let prev = null;
+		let skippedSeasons = false;
 		for (const year of years) {
 			const constructorIDs = driver[String(year)]
 				.split('+')
@@ -55,13 +99,13 @@ const init = async () => {
 			}
 
 			for (const constructorID of constructorIDs) {
-				const constructor = constructors.find((d) => d.id === constructorID);
+				const constructor = constructors.get(constructorID);
 				if (!constructor) {
 					throw new Error(`cannot find constructor ${constructorID}`);
 				}
 				constructor.years.add(year);
 				constructor.lineage.years.add(year);
-				const existing = entries.filter(
+				const existingConstructorYearEntries = entries.filter(
 					(d) =>
 						d.constructor.lineage.id === constructor.lineage.id &&
 						d.year === year
@@ -70,13 +114,13 @@ const init = async () => {
 					constructor,
 					year,
 					driver,
-					car: existing.length,
-					totalCars: existing.length + 1,
+					car: existingConstructorYearEntries.length,
+					totalCars: existingConstructorYearEntries.length + 1,
 					name: constructor.name,
 				};
 				entries.push(entry);
-				for (let e of existing) {
-					e.totalCars = existing.length + 1;
+				for (const e of existingConstructorYearEntries) {
+					e.totalCars = existingConstructorYearEntries.length + 1;
 				}
 				if (prev) {
 					links.push({ from: prev, to: entry, skippedSeasons });
@@ -117,7 +161,7 @@ const init = async () => {
 	}
 
 	const rows = [];
-	for (const lineage of lineages) {
+	for (const lineage of lineages.values()) {
 		let row = rows.findIndex((years) => {
 			return ![...years].find((year) => lineage.years.has(year));
 		});
@@ -133,19 +177,12 @@ const init = async () => {
 		lineage.row = row;
 	}
 
-	const swapEntries = (a, b) => {
-		let [carA, carB] = [a.car, b.car];
-		a.car = carB;
-		b.car = carA;
-		render();
-	};
-
 	const render = () => {
 		document.querySelector('svg');
 
 		const x = d3
 			.scaleBand()
-			.domain(lineages.map((c) => c.row))
+			.domain([...lineages.values()].map((c) => c.row))
 			.range([0, WIDTH]);
 
 		const y = d3.scaleLinear().domain(d3.extent(years)).range([HEIGHT, 0]);
@@ -153,18 +190,15 @@ const init = async () => {
 		let lastSelected;
 		let selected = null; // selected entry
 		const update = () => {
-			if (selected === lastSelected) {
-				return;
-			}
-			path.attr('opacity', (d) =>
-				!selected || selected.driver === d.from.driver ? 1 : 0.2
+			if (selected === lastSelected) return;
+			path.classed(
+				'fade',
+				(d) => selected && selected.driver !== d.from.driver
 			);
-			entry.attr('opacity', (d) =>
-				!selected || selected.driver === d.driver ? 1 : 0.2
-			);
+			entry.classed('fade', (d) => selected && selected.driver !== d.driver);
 			if (selected) {
 				tooltip
-					.attr('display', 'block')
+					.classed('show', true)
 					.attr(
 						'transform',
 						`translate(${carPos(selected)},${y(selected.year)})`
@@ -172,7 +206,7 @@ const init = async () => {
 					.select('text')
 					.text(selected.driver.name);
 			} else {
-				tooltip.attr('display', 'none');
+				tooltip.classed('show', false);
 			}
 			if (swap) {
 				entry
@@ -197,40 +231,16 @@ const init = async () => {
 
 		const defs = svg.append('defs');
 
-		let gradientCount = 0;
-		const generateGradient = (...stops) => {
-			// reverse is used when the link is vertical (when driver switches constructor within season)
-			if (uniq(stops.map((s) => s[1])).length === 1) {
-				return stops[0][1];
-			}
-			stops.sort((a, b) => a[0] - b[0]);
-			const id = 'grad-' + gradientCount++;
-			const gradient = defs
-				.append('linearGradient')
-				.attr('id', id)
-				.attr('x1', '0%')
-				.attr('y1', '0%')
-				.attr('x2', '0%')
-				.attr('y2', '100%');
-
-			for (const [offset, color] of stops) {
-				gradient
-					.append('stop')
-					.attr('offset', offset * 100 + '%')
-					.attr('stop-color', color);
-			}
-			return `url(#${id})`;
-		};
-
 		const container = svg
 			.append('g')
 			.attr('transform', `translate(${MARGIN.left},${MARGIN.top})`);
 
 		const lineageGroup = container
 			.selectAll('.lineage')
-			.data(lineages)
+			.data([...lineages.values()])
 			.enter()
 			.append('g')
+			.attr('class', 'lineage')
 			.attr(
 				'transform',
 				(d) => `translate(${x(d.row)},${y(Math.max(...d.years))})`
@@ -239,26 +249,25 @@ const init = async () => {
 		lineageGroup
 			.append('rect')
 			.attr('fill', (d) => {
-				const stops = [];
 				const startYear = Math.min(...d.years);
 				const totalYears = Math.max(...d.years) - startYear;
-				for (const constructor of d.constructors) {
-					for (const year of constructor.years.values()) {
-						let color = constructor.color;
-						//if (constructor.id === 'jordan') { color = '#000000'; }
-						stops.push([
-							1 - (year - startYear) / totalYears + 0.2 / totalYears,
-							color,
-						]);
-					}
-				}
-				return generateGradient(...stops);
+				const stops = [...d.constructors]
+					.map((constructor) => {
+						return [...constructor.years].map((year) => {
+							const color = constructor.color;
+							return [
+								1 - (year - startYear) / totalYears + 0.2 / totalYears,
+								color,
+							];
+						});
+					})
+					.flat();
+				return generateGradient(defs, ...stops);
 			})
 			.attr('rx', 5)
 			.attr('ry', 5)
 			.attr('x', -x.bandwidth() / 2 + 2)
 			.attr('y', -50)
-			.attr('opacity', '0.2')
 			.attr('width', () => x.bandwidth() - 4)
 			.attr(
 				'height',
@@ -271,7 +280,7 @@ const init = async () => {
 				let titles = [];
 				for (const constructor of d.constructors) {
 					let last;
-					const years = [...constructor.years].sort().reverse();
+					const years = [...constructor.years].sort((a, b) => b - a);
 					for (const year of years) {
 						if (!last || year < last - 1) {
 							titles.push({
@@ -300,25 +309,20 @@ const init = async () => {
 		title
 			.append('text')
 			.attr('class', 'title')
-			.attr('text-anchor', 'middle')
 			.attr('fill', (d) => d.color)
 			.attr('y', (d) => y(d.yearEnd) - y(Math.max(...d.lineage.years)) - 26)
 			.text((d) => d.name);
 
 		title
 			.append('text')
-			.attr('text-anchor', 'middle')
-			.attr('fill', '#000')
-			.attr('opacity', 0.4)
-			.attr('y', (d) => y(d.yearStart) - y(Math.max(...d.lineage.years)) - 68)
+			.attr('class', 'subtitle')
+			.attr('y', (d) => y(d.yearStart) - y(Math.max(...d.lineage.years)) - 54)
 			.text((d) => (d.action ? `${d.action}` : ''));
 
 		title
 			.append('text')
-			.attr('text-anchor', 'middle')
-			.attr('fill', '#000')
-			.attr('opacity', 0.4)
-			.attr('y', (d) => y(d.yearStart) - y(Math.max(...d.lineage.years)) - 58)
+			.attr('class', 'subtitle')
+			.attr('y', (d) => y(d.yearStart) - y(Math.max(...d.lineage.years)) - 44)
 			.text((d) => (d.action ? `${d.name}` : ''));
 
 		container
@@ -327,7 +331,6 @@ const init = async () => {
 			.enter()
 			.append('text')
 			.text((d) => d)
-			.attr('text-anchor', 'start')
 			.attr('x', -MARGIN.left)
 			.attr('y', (d) => y(d));
 
@@ -347,15 +350,16 @@ const init = async () => {
 			.enter()
 			.append('path')
 			.attr('class', (d) => `path n-${makeID(d.from.name)}`)
+			.classed('skip-season', (d) => d.skippedSeasons)
 			.attr('d', (d) => {
-				let y1 = Math.round(y(d.from.year)),
-					x1 = Math.round(carPos(d.from)),
-					y2 = Math.round(y(d.to.year)),
-					x2 = Math.round(carPos(d.to)) + 0.001, // add tiny about to avoid straight lines (gradients don't work) https://stackoverflow.com/questions/21638169/svg-line-with-gradient-stroke-wont-display-straight/34687362
-					yc = Math.round(y1 + (y2 - y1) / 2),
-					xc = Math.round(x1 + (x2 - x1) / 2); //,
-				//offset = curveOffsets(d.from.constructor.lineage.id);
-				//console.log(offset)
+				const y1 = Math.round(y(d.from.year));
+				const x1 = Math.round(carPos(d.from));
+				const y2 = Math.round(y(d.to.year));
+				// add tiny amount to avoid straight lines (gradients don't work)
+				// https://stackoverflow.com/questions/21638169/svg-line-with-gradient-stroke-wont-display-straight
+				const x2 = Math.round(carPos(d.to)) + 0.001;
+				const yc = Math.round(y1 + (y2 - y1) / 2);
+				const xc = Math.round(x1 + (x2 - x1) / 2);
 				return [
 					['M', x1, y1], // move to start coordinate
 					['L', x1, y1 - 10],
@@ -366,10 +370,9 @@ const init = async () => {
 					.flat()
 					.join(' ');
 			})
-			.attr('stroke-dasharray', (d) => (d.skippedSeasons ? '2 3' : 'none'))
-			.attr('fill', 'none')
 			.attr('stroke', (d) =>
 				generateGradient(
+					defs,
 					[d.from.year === d.to.year ? 0.2 : 0.8, d.from.constructor.color],
 					[d.from.year === d.to.year ? 0.8 : 0.2, d.to.constructor.color]
 				)
@@ -383,12 +386,12 @@ const init = async () => {
 
 		let swap;
 
-		let entry = container
+		const entry = container
 			.selectAll('.entry')
 			.data(entries)
 			.enter()
 			.append('g')
-			.attr('class', (d) => 'entry ' + d.constructor.id)
+			.attr('class', (d) => `entry ${d.constructor.id}`)
 			.attr('transform', (d) => `translate(${carPos(d)},${y(d.year)})`)
 			.on('mousemove', (d) => {
 				selected = d;
@@ -396,8 +399,11 @@ const init = async () => {
 				d3.event.stopPropagation();
 			})
 			.on('click', (d) => {
+				if (!DEBUG) return;
+				// Swap two drivers. Useful for previewing different orders.
 				if (swap) {
 					swapEntries(swap, d);
+					render();
 				} else {
 					swap = d;
 					update();
@@ -409,25 +415,11 @@ const init = async () => {
 			.attr('r', 9)
 			.attr('fill', (d) => d.constructor.color);
 
-		entry
-			.append('text')
-			.attr('dy', 2)
-			.text((d) => d.driver.id);
+		entry.append('text').text((d) => d.driver.id);
 
-		const tooltip = svg.append('g').attr('display', 'none');
-
-		tooltip
-			.append('rect')
-			.attr('width', 140)
-			.attr('height', 26)
-			.attr('fill', '#000');
-
-		tooltip
-			.append('text')
-			.attr('fill', '#fff')
-			.attr('x', 70)
-			.attr('y', 16)
-			.attr('text-anchor', 'middle');
+		const tooltip = svg.append('g').attr('class', 'tooltip');
+		tooltip.append('rect');
+		tooltip.append('text');
 	};
 
 	render();

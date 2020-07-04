@@ -5,30 +5,57 @@ body {
 }
 text {
 	font-family: sans-serif;
-	font-size: 11px;	
+	font-size: 11px;
+}
+.lineage rect {
+	opacity: 0.2;
+}
+.path {
+	fill: none;
+}
+.path.skip-season {
+	stroke-dasharray: 2 3;
+}
+.entry circle {
 }
 .entry text {
 	font-size: 7px;
-	font-family: sans-serif;
 	fill: white;
 	font-weight: bold;
 	text-anchor: middle;
+	transform: translateY(2px);
 }
-/*.entry.renault text,
-.entry.minardi text,
-.entry.mercedes text,
-.entry.lotusf1 text,
-.entry.simtek text {
-	fill: #333;
-}*/
-.constructor-title text {
-	font-size: 8px;
-	font-weight: bold;
-	/*text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.03), 1px 1px 1px rgba(0, 0, 0, 0.03);
-	stroke: rgba(0, 0, 0, 0.08);*/
-
-}
-.constructor-title text.title {
+.constructor-title .title {
 	font-weight: bold;
 	font-size: 10px;
+	text-anchor: middle;
+}
+.constructor-title .subtitle {
+	fill: rgba(0, 0, 0, 0.4);
+	font-style: italic;
+	font-size: 8px;
+	text-anchor: middle;
+}
+.year {
+	text-anchor: start;
+}
+.tooltip {
+	display: none;
+}
+.tooltip.show {
+	display: block;
+}
+.tooltip rect {
+	width: 140px;
+	height: 26px;
+	fill: #000000;
+}
+.tooltip text {
+	fill: #ffffff;
+	text-anchor: middle;
+	transform: translate(70px, 16px);
+}
+.path.fade,
+.entry.fade {
+	opacity: 0.2;
 }
