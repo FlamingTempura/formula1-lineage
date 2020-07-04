@@ -2,6 +2,8 @@
 
 Visualisation of teams and drivers in Formula 1 over past few decades.
 
-!(Screenshot)[screenshot.png]
+See the visualisation here: https://flamingtempura.github.io/formula1-lineage/
 
-https://flamingtempura.github.io/formula1-lineage/
+Screenshot:
+![Screenshot](screenshot.png)
+
