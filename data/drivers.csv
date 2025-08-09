@@ -151,7 +151,7 @@ LAR,Oscar Larrauri,,,,,,,,,,,eurobrun,eurobrun,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 LAT,Nicholas Latifi,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,williams,williams,williams,,,
 LAU,Niki Lauda,,brabham,,,mclaren,mclaren,mclaren,mclaren,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 LAV,Giovanni Lavaggi,,,,,,,,,,,,,,,,,,pacific,minardi,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-LAW,Liam Lawson,https://en.wikipedia.org/wiki/Liam_Lawson,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,visa,redbull
+LAW,Liam Lawson,https://en.wikipedia.org/wiki/Liam_Lawson,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,alphatauri,visa,redbull+visa
 LEC,Charles Leclerc,https://en.wikipedia.org/wiki/Sebastian_Vettel,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,alfaromeosauber,ferrari,ferrari,ferrari,ferrari,ferrari,ferrari,ferrari
 LEE,Geoff Lees,,tyrrell,ensign+shadow+ram,,teamlotus+theodore,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 LEH,JJ Lehto,,,,,,,,,,,,onyx,onyx,dallara,dallara,sauber,benetton+sauber,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
@@ -288,7 +288,6 @@ FIT,Pietro Fittipaldi,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,haas,,,,,
 AIT,Jack Aitken,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,williams,,,,,
 ZHO,Guanyu Zhou,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,alfaromeosauber,alfaromeosauber,kicksauber,
 DEV,Nyck de Vries,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,williams,alphatauri,,
-LAW,Liam Lawson,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,alphatauri,,
 PIA,Oscar Piastri,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,mclaren,mclaren,mclaren
 SAR,Logan Sargeant,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,williams,williams,
 BEA,Oliver Bearman,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,ferrari+haas,haas
