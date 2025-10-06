@@ -256,7 +256,14 @@ const init = async () => {
       // Apply fade class based on leftMidSeason when nothing is selected, or based on hover
       path.classed(
         "fade",
-        (d) => (d.from.leftMidSeason && d.from.year === latestYear && !selected) || (selected && selected.driver !== d.from.driver)
+        (d) =>
+          // Default fading for leftMidSeason entries/paths in the latest year when nothing is selected
+          (!selected && (
+            (d.from.leftMidSeason && d.from.year === latestYear) ||
+            (d.to.leftMidSeason && d.to.year === latestYear)
+          )) ||
+          // Fading on hover: if something is selected and the path's 'from' driver is not the selected driver
+          (selected && selected.driver !== d.from.driver)
       );
       entry.classed(
         "fade",
