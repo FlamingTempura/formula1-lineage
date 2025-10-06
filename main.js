@@ -401,9 +401,13 @@ const init = async () => {
       .attr("y", (d) => y(d));
 
     const carPos = (entry) => {
-      const space =
-        (entry.totalCars === 2 ? 2 : entry.totalCars === 3 ? 1.0 : 1.0) *
-        ENTRY_SPACE;
+      const space = getEntrySpacing(entry.totalCars);
+
+      function getEntrySpacing(totalCars) {
+        if (totalCars === 2) return 2 * ENTRY_SPACE;
+        if (totalCars === 3) return 1.3 * ENTRY_SPACE;
+        return ENTRY_SPACE;
+      }
       return (
         x(entry.constructor.lineage.row) +
         (entry.car - (entry.totalCars - 1) / 2) * space
