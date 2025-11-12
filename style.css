@@ -18,6 +18,9 @@ text {
 }
 .entry circle {
 }
+.entry {
+  cursor: pointer;
+}
 .entry text {
 	font-size: 7px;
 	fill: white;

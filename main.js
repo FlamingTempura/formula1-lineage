@@ -140,6 +140,59 @@ const init = async () => {
     }
   }
 
+  // Identify the latest year
+  const latestYear = Math.max(...years);
+
+  // Map to store the last team for each driver in the latest year
+  const driverLastTeamInLatestYear = new Map();
+
+  // Iterate through entries to find the last team for each driver in the latest year
+  for (const entry of entries) {
+    if (entry.year === latestYear) {
+      driverLastTeamInLatestYear.set(entry.driver.id, entry.constructor.id);
+    }
+  }
+
+  // Map to store the two most recent drivers for each team in the latest year
+  const teamLatestDrivers = new Map();
+
+  // Populate teamLatestDrivers
+  for (const entry of entries) {
+    if (entry.year === latestYear) {
+      const teamId = entry.constructor.id;
+      const driverId = entry.driver.id;
+
+      // Only consider drivers whose last team in the latest year is the current team
+      if (driverLastTeamInLatestYear.get(driverId) === teamId) {
+        if (!teamLatestDrivers.has(teamId)) {
+          teamLatestDrivers.set(teamId, []);
+        }
+        const driversForTeam = teamLatestDrivers.get(teamId);
+        if (!driversForTeam.includes(driverId)) {
+          driversForTeam.push(driverId);
+        }
+      }
+    }
+  }
+
+  // Mark entries for greying out
+  for (const entry of entries) {
+    if (entry.year === latestYear) {
+      const teamId = entry.constructor.id;
+      const driverId = entry.driver.id;
+      const driversForTeam = teamLatestDrivers.get(teamId) || [];
+
+      // If the driver is not among the first two "most recent" drivers for the team, mark for greying out
+      if (!driversForTeam.slice(0, 2).includes(driverId)) {
+        entry.leftMidSeason = true;
+      } else {
+        entry.leftMidSeason = false;
+      }
+    } else {
+      entry.leftMidSeason = false; // Not in the latest year, so not greyed out by this rule
+    }
+  }
+
   for (let { constructor, year, ...cars } of formations) {
     year = Number(year);
     const teamEntries = entries.filter(
@@ -200,11 +253,22 @@ const init = async () => {
     let selected = null; // selected entry
     const update = () => {
       if (selected === lastSelected) return;
+      // Apply fade class based on leftMidSeason when nothing is selected, or based on hover
       path.classed(
         "fade",
-        (d) => selected && selected.driver !== d.from.driver
+        (d) =>
+          // Default fading for leftMidSeason entries/paths in the latest year when nothing is selected
+          (!selected && (
+            (d.from.leftMidSeason && d.from.year === latestYear) ||
+            (d.to.leftMidSeason && d.to.year === latestYear)
+          )) ||
+          // Fading on hover: if something is selected and the path's 'from' driver is not the selected driver
+          (selected && selected.driver !== d.from.driver)
       );
-      entry.classed("fade", (d) => selected && selected.driver !== d.driver);
+      entry.classed(
+        "fade",
+        (d) => (d.leftMidSeason && !selected) || (selected && selected.driver !== d.driver)
+      );
       if (selected) {
         tooltip
           .classed("show", true)
@@ -235,7 +299,7 @@ const init = async () => {
       .attr("height", HEIGHT + MARGIN.top + MARGIN.bottom)
       .on("mousemove", () => {
         selected = null;
-        update();
+        update(); // Call update to apply default greyed-out state when nothing is selected
       });
 
     const defs = svg.append("defs");
@@ -344,9 +408,13 @@ const init = async () => {
       .attr("y", (d) => y(d));
 
     const carPos = (entry) => {
-      const space =
-        (entry.totalCars === 2 ? 2 : entry.totalCars === 3 ? 1.0 : 1.0) *
-        ENTRY_SPACE;
+      const space = getEntrySpacing(entry.totalCars);
+
+      function getEntrySpacing(totalCars) {
+        if (totalCars === 2) return 2 * ENTRY_SPACE;
+        if (totalCars === 3) return 1.3 * ENTRY_SPACE;
+        return ENTRY_SPACE;
+      }
       return (
         x(entry.constructor.lineage.row) +
         (entry.car - (entry.totalCars - 1) / 2) * space
@@ -360,6 +428,7 @@ const init = async () => {
       .append("path")
       .attr("class", (d) => `path n-${makeID(d.from.name)}`)
       .classed("skip-season", (d) => d.skippedSeasons)
+
       .attr("d", (d) => {
         const y1 = Math.round(y(d.from.year));
         const x1 = Math.round(carPos(d.from));
@@ -429,6 +498,9 @@ const init = async () => {
     const tooltip = svg.append("g").attr("class", "tooltip");
     tooltip.append("rect");
     tooltip.append("text");
+
+    // Initial call to update to apply the default greyed-out state
+    update();
   };
 
   render();
